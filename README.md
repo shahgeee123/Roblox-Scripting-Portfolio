@@ -1,10 +1,31 @@
 # Vault · Roblox Scripting Portfolio
 
-**Luau • Server-authoritative systems • Modular gameplay code**
+**Luau • Server-authoritative systems • Gameplay AI and physics**
 
-Hey, I'm Vault. This portfolio focuses on the code behind Roblox gameplay: placement, machine progression, persistence, inventory, and responsive interfaces.
+Hey, I'm Vault. This portfolio focuses on the code behind Roblox gameplay: AI behaviour, physics, placement, persistence, inventory, and responsive interfaces.
 
-## Start here
+## Featured script: Vault Guardian
+
+**File:** [`Vault-Guardian/VaultGuardian.server.luau`](Vault-Guardian/VaultGuardian.server.luau)
+
+One self-contained server Script with 737 lines of code, not counting comments or blank lines. A hovering security drone guards a present inside a walled vault. Players steal the present and try to carry it over the exit line. The drone notices them, gives them a head start, then chases with lead pursuit, steers around cover, and leaps on a ballistic arc to where the thief is about to be.
+
+| Area | What the script uses |
+| --- | --- |
+| CFrame math | Zone-space bounds and clamping (`PointToObjectSpace`), a patrol circle built from rotated CFrames, view-cone dot products, facing and lean orientation |
+| Physics | Server-owned drone driven by `AlignPosition` / `AlignOrientation`, a ballistic leap solved from projectile motion, `LinearVelocity` knockback on client-owned characters |
+| Metatables / OOP | `Cleaner`, `Zone`, `Loot` and `Guardian` classes (`__index`, `__tostring`) and a table-driven state machine |
+| Algorithms | Quadratic intercept solver for lead pursuit, sphere-cast steering around obstacles |
+
+### Run the demo
+
+1. Create a new **Baseplate** in Roblox Studio.
+2. Insert a **Script** into **ServerScriptService** and paste in the file's contents.
+3. Press **Play**. Hold **E** on the present, then carry it over the green line. The Output window logs every state change the guardian makes.
+
+The script builds its own arena, so it needs no models, assets or other scripts.
+
+## Other samples
 
 | Sample | Engineering focus | Entry point |
 | --- | --- | --- |
@@ -14,13 +35,7 @@ Hey, I'm Vault. This portfolio focuses on the code behind Roblox gameplay: place
 | [Inventory System](Inventory-System/) | Stack limits, capacity checks, all-or-nothing mutations | `InventoryService.luau` |
 | [UI System](UI-System/) | Tween cancellation, input binding, connection cleanup | `PanelController.luau` |
 
-**Suggested review:** start with placement to inspect the client/server boundary, then inventory for state invariants, and data for persistence tradeoffs. Each folder explains its setup, design decisions, limitations, and manual checks.
-
-## About these samples
-
-This repository contains focused demonstration systems for code review, with installation instructions and documented design tradeoffs. The samples are independent of the released project linked below. Runtime checks are documented in STUDIO-CHECKS.md and have not yet been executed in Roblox Studio.
-
-
+These are smaller, focused examples, each with its own README covering setup, design decisions and limitations. They are independent of the released project linked below.
 
 ## Project context
 
@@ -32,13 +47,10 @@ This repository contains focused demonstration systems for code review, with ins
 - Small modules expose explicit operations instead of sharing mutable tables.
 - Invalid requests fail without partially changing gameplay state.
 - Comments explain constraints and tradeoffs, not just individual statements.
-- Each example has a narrow scope; this is a code-review package, not a complete game framework.
 
 ## Run and review
 
-Use a fresh Roblox Studio test place and follow the installation map in each folder. Files ending in `.server.luau` become **Scripts**, `.client.luau` become **LocalScripts**, and other `.luau` files become **ModuleScripts**. Use the base filename for the Studio instance name; omit the extension and `.server`/`.client` suffix.
-
-The folders are independent examples. Placement has its own playable bootstrap; the other folders provide focused integrations or test harnesses. There are no external package dependencies. See [STUDIO-CHECKS.md](STUDIO-CHECKS.md) for the review checklist and [APPLICATION-CHECKLIST.md](APPLICATION-CHECKLIST.md) before publishing.
+Files ending in `.server.luau` become **Scripts**, `.client.luau` become **LocalScripts**, and other `.luau` files become **ModuleScripts**. Use the base filename for the Studio instance name; omit the extension and the `.server`/`.client` suffix. There are no external package dependencies. See [STUDIO-CHECKS.md](STUDIO-CHECKS.md) for the review checklist and [APPLICATION-CHECKLIST.md](APPLICATION-CHECKLIST.md) before applying.
 
 ## Reference documentation
 
